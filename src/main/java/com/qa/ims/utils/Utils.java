@@ -20,7 +20,7 @@ public class Utils {
 	}
 
 	public Long getLong() {
-		String input = getString();
+		String input;
 		Long longInput = null;
 		do {
 			input = getString();
