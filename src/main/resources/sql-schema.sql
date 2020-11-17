@@ -20,10 +20,7 @@ CREATE TABLE IF NOT EXISTS `ims`.`orders` (
 	`order_id` INT(11) NOT NULL AUTO_INCREMENT,
     `orderCost` DOUBLE(200,2) NULL DEFAULT NULL,
     `customer_id_fk` INT(11) NULL DEFAULT NULL,
-    `orderItems_id_fk` INT(11) NULL DEFAULT NULL,
-    PRIMARY KEY (`order_id`),
-    FOREIGN KEY (`customer_id_fk`) REFERENCES customers(`id`),
-    FOREIGN KEY (`orderItems_id_fk`) REFERENCES order_items(`orderItems_id`)
+    PRIMARY KEY (`order_id`)
 );
 CREATE TABLE IF NOT EXISTS `ims`.`order_items` (
 	`order_items_id` INT(11) NOT NULL AUTO_INCREMENT,
