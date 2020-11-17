@@ -1,5 +1,6 @@
 package com.qa.ims.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -9,6 +10,7 @@ import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.persistence.domain.OrderItems;
 import com.qa.ims.utils.Utils;
 
 /**
@@ -62,11 +64,26 @@ public class OrderController implements CrudController<Order> {
 		Long order_id = utils.getLong();
 		LOGGER.info("Please enter a customer id");
 		Long customer_id_fk = utils.getLong();
+		
+		LOGGER.info("Would you like to add an item to the order? yes/no");
+		//String addItem = utils.getString();
+		
+		boolean looper = true;
+		while(looper) {
+			LOGGER.info("Please enter the item id you would like to add to order");
+			Long item_id_fk = utils.getLong();
+			//OrderItems orderItems = orderDAO.updateItems(new OrderItems(order_id,item_id_fk));
+			LOGGER.info("Would you like to add another item to the order? yes/no");
+			looper = utils.getBool();
+		}
+		
+		
 		Order order = orderDAO.update(new Order(order_id, customer_id_fk));
 		LOGGER.info("Order Updated");
 		return order;
 	}
 
+	
 	/**
 	 * Deletes an existing order by the id of the order
 	 * 

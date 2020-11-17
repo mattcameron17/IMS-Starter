@@ -1,5 +1,6 @@
 package com.qa.ims.utils;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
@@ -36,6 +37,10 @@ public class Utils {
 	public String getString() {
 		return scanner.nextLine();
 	}
+	
+	public boolean getBool() {
+		return scanner.nextBoolean();
+	}
 
 	public Double getDouble() {
 		String input;
@@ -50,5 +55,21 @@ public class Utils {
 		} while (doubleInput == null);
 		return doubleInput;
 	}
+	
+	public Integer getInt() {
+		String input;
+		Integer integerInput = null;
+		do {
+			input = getString();
+			try {
+				integerInput = Integer.parseInt(input);
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Error - Please enter a number");
+			}
+		} while (integerInput == null);
+		return integerInput;
+	}
+	
+	
 
 }

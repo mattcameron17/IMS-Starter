@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.persistence.domain.OrderItems;
 import com.qa.ims.utils.DBUtils;
 
 public class OrderDAO implements Dao<Order> {
@@ -23,6 +24,12 @@ public class OrderDAO implements Dao<Order> {
 		Long order_id = resultSet.getLong("order_id");
 		Long customer_id_fk = resultSet.getLong("customer_id_fk");
 		return new Order(order_id, customer_id_fk);
+	}
+	
+	public OrderItems modelFromResultSetOI(ResultSet resultSet) throws SQLException {
+		Long order_items_id = resultSet.getLong("order_items_id");
+		Long item_id_fk = resultSet.getLong("item_id_fk");
+		return new OrderItems(order_items_id, item_id_fk);
 	}
 		
 
@@ -92,6 +99,21 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
+	
+	public OrderItems readOrderItems(Long order_items_id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where order_id = " + order_items_id);) {
+			resultSet.next();
+			return modelFromResultSetOI(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	
+	
 
 	/**
 	 * Updates an order in the database
@@ -104,8 +126,9 @@ public class OrderDAO implements Dao<Order> {
 	public Order update(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update orders set orderCost ='" + order.getOrderCost() + "', customer_id_fk ='"
+			statement.executeUpdate("update orders set order_id ='" + order.getOrder_id() + "', customer_id_fk ='"
 					+ order.getCustomer_id_fk() + "' where order_id =" + order.getOrder_id());
+			
 			return readOrder(order.getOrder_id());
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -113,6 +136,21 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
+	
+	public OrderItems updateItems(OrderItems orderItems) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("INSERT INTO order_items(order_id_fk, item_id_fk) values('" + orderItems.getOrder_id_fk() + "', '" 
+					+ orderItems.getItem_id_fk() + "')");
+			
+			return readOrderItems(orderItems.getOrder_items_id());
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+
 
 	/**
 	 * Deletes an order in the database
