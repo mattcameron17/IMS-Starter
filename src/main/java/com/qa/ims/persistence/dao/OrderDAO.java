@@ -71,6 +71,21 @@ public class OrderDAO implements Dao<Order> {
 		return new ArrayList<>();
 	}
 	
+	public Long readPrice(Long item_id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select itemValue from items where item_id = " + item_id );) {
+			resultSet.next();
+			return resultSet.getLong("itemValue");
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+		
+		
+	}
+	
 	
 	
 	public Order readLatest() {
@@ -183,6 +198,18 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 	
+	public void updateCost(Long orderCost, Order order) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("update orders set orderCost =" + orderCost +  " where order_id =" + order.getOrder_id());
+			
+			
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		
+	}
 
 
 	/**

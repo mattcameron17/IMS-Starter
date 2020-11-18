@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Order {
 	
 	private Long order_id;
-	private Long orderCost = null;
+	private Long orderCost = 0L;
 	private Long customer_id_fk;
 	
 	
