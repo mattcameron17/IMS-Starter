@@ -28,10 +28,10 @@ public class OrderDAO implements Dao<Order> {
 	
 	public OrderItems modelFromResultSetOI(ResultSet resultSet) throws SQLException {
 		Long order_items_id = resultSet.getLong("order_items_id");
+		Long order_id_fk = resultSet.getLong("order_id_fk");
 		Long item_id_fk = resultSet.getLong("item_id_fk");
-		return new OrderItems(order_items_id, item_id_fk);
-	}
-		
+		return new OrderItems(order_items_id, order_id_fk, item_id_fk);
+	}	
 
 	/**
 	 * Reads all orders from the database
@@ -54,7 +54,25 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return new ArrayList<>();
 	}
-
+	
+	public List<OrderItems> readOrderedItems(Order order) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select * from order_items where order_id_fk = " + order.getOrder_id() );) {
+			List<OrderItems> order_items = new ArrayList<>();
+			while (resultSet.next()) {
+				order_items.add(modelFromResultSetOI(resultSet));
+			}
+			return order_items;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
+	}
+	
+	
+	
 	public Order readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -67,6 +85,20 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
+	
+	public OrderItems readLatestItems() {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_items ORDER BY order_items_id DESC");) {
+			resultSet.next();
+			return modelFromResultSetOI(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	
 
 	/**
 	 * Creates an order in the database
@@ -80,6 +112,20 @@ public class OrderDAO implements Dao<Order> {
 			statement.executeUpdate("INSERT INTO orders(customer_id_fk) values('" + order.getCustomer_id_fk()
 					+ "')");
 			return readLatest();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	
+	public OrderItems createItems(OrderItems orderItems) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("INSERT INTO order_items(order_id_fk, item_id_fk) values('" + orderItems.getOrder_id_fk() + "', '" 
+					+ orderItems.getItem_id_fk() + "')");
+			
+			return readLatestItems();
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -103,7 +149,7 @@ public class OrderDAO implements Dao<Order> {
 	public OrderItems readOrderItems(Long order_items_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where order_id = " + order_items_id);) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_items where order_items_id = " + order_items_id);) {
 			resultSet.next();
 			return modelFromResultSetOI(resultSet);
 		} catch (Exception e) {
@@ -137,19 +183,6 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 	
-	public OrderItems updateItems(OrderItems orderItems) {
-		try (Connection connection = DBUtils.getInstance().getConnection();
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO order_items(order_id_fk, item_id_fk) values('" + orderItems.getOrder_id_fk() + "', '" 
-					+ orderItems.getItem_id_fk() + "')");
-			
-			return readOrderItems(orderItems.getOrder_items_id());
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
-		}
-		return null;
-	}
 
 
 	/**
@@ -162,6 +195,18 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			return statement.executeUpdate("delete from orders where order_id = " + order_id);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+	
+	
+	public int deleteOrderItem(long order_items_id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			return statement.executeUpdate("delete from order_items where order_item_id = " + order_items_id);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
