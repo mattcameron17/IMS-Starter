@@ -70,18 +70,28 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter a customer id");
 		Long customer_id_fk = utils.getLong();
 		
-		LOGGER.info("Would you like to add an item to the order?");
+		LOGGER.info("Would you like to add an item to the order? yes/no");
 		String addItem = utils.getString();
 		
 		while(addItem.toLowerCase().equals("yes")) {
 			LOGGER.info("Please enter the item id you would like to add to order");
 			Long item_id_fk = utils.getLong();
 			OrderItems orderItems = orderDAO.createItems(new OrderItems(order_id,item_id_fk));
-			LOGGER.info("Would you like to add another item to the order?");
+			LOGGER.info("Would you like to add another item to the order? yes/no");
 			addItem = utils.getString();
 			
 		}
 		
+		LOGGER.info("Would you like to remove an item from the order? yes/no");
+		String removeItem = utils.getString();
+		
+		while(removeItem.toLowerCase().equals("yes")) {
+			LOGGER.info("Please enter the order item id you would like to remove from order");
+			Long order_items_id = utils.getLong();
+			orderDAO.deleteOrderItem(order_items_id);
+			LOGGER.info("Would you like to remove another item from the order? yes/no");
+			removeItem = utils.getString();
+		}
 		
 		
 		Order order = orderDAO.update(new Order(order_id, customer_id_fk));
