@@ -32,7 +32,7 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public List<Customer> readAll() {
 		List<Customer> customers = customerDAO.readAll();
-		for (Customer customer : customers) {
+		for (Customer customer : customers) { 
 			LOGGER.info(customer.toString());
 		}
 		return customers;

@@ -8,7 +8,7 @@ public class Item {
 	
 	public Item(String itemName, Double itemValue) {
 		this.itemName = itemName;
-		this.itemValue = itemValue;
+		this.itemValue = itemValue; 
 	}
 	
 	public Item(Long item_id, String itemName, Double itemValue) {
@@ -16,7 +16,7 @@ public class Item {
 		this.itemName = itemName;
 		this.itemValue = itemValue;
 	}
-
+ 
 	public Long getItem_id() {
 		return item_id;
 	}

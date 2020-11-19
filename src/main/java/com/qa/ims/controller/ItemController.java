@@ -36,7 +36,7 @@ public class ItemController implements CrudController<Item> {
 		List<Item> items = itemDAO.readAll();
 		for (Item item : items) {
 			LOGGER.info(item.toString());
-		}
+		} 
 		return items;
 	}
 

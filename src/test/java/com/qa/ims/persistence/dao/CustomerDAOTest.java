@@ -18,7 +18,7 @@ public class CustomerDAOTest {
 
 	@BeforeClass
 	public static void init() {
-		DBUtils.connect("root", "pass");
+		DBUtils.connect("root", "Ic3Berg$lim");
 	}
 
 	@Before
@@ -38,7 +38,8 @@ public class CustomerDAOTest {
 		expected.add(new Customer(1L, "jordan", "harrison"));
 		assertEquals(expected, DAO.readAll());
 	}
-
+	
+	
 	@Test
 	public void testReadLatest() {
 		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
@@ -55,7 +56,7 @@ public class CustomerDAOTest {
 		final Customer updated = new Customer(1L, "chris", "perrins");
 		assertEquals(updated, DAO.update(updated));
 
-	}
+	} 
 
 	@Test
 	public void testDelete() {

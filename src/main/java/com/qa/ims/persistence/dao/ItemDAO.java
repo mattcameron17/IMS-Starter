@@ -23,7 +23,7 @@ public class ItemDAO implements Dao<Item> {
 		Long item_id = resultSet.getLong("item_id");
 		String itemName = resultSet.getString("itemName");
 		Double itemValue = resultSet.getDouble("itemValue");
-		return new Item(item_id, itemName, itemValue);
+		return new Item(item_id, itemName, itemValue); 
 	}
 	
 	/**
