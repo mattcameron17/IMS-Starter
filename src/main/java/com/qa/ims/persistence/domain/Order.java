@@ -15,8 +15,16 @@ public class Order {
 	
 	public Order(Long order_id, Long customer_id_fk) {
 		this.order_id = order_id;
-		this.customer_id_fk = customer_id_fk;
+		this.customer_id_fk = customer_id_fk; 
 		
+	}
+	
+
+	public Order(Long order_id, Long orderCost, Long customer_id_fk) {
+		super();
+		this.order_id = order_id;
+		this.orderCost = orderCost;
+		this.customer_id_fk = customer_id_fk;
 	}
 
 	public Long getOrder_id() {

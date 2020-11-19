@@ -37,16 +37,19 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
-		Long orderCost = 0L;
+		
 		Long item_id;
 		//to add the updated price to the orders table
 		for (Order order : orders) {
 			List<OrderItems> order_itemsItems = orderDAO.readOrderedItems(order);
+			Long orderCost = 0L;
 			for (OrderItems order_items : order_itemsItems) {
+				
 				item_id = order_items.getItem_id_fk();
 				Long itemCost = orderDAO.readPrice(item_id);
 				orderCost = orderCost + itemCost;
 				orderDAO.updateCost(orderCost, order);
+				
 				
 			}
 		}
@@ -59,7 +62,7 @@ public class OrderController implements CrudController<Order> {
 				
 				
 			}
-			LOGGER.info("order total cost: " + orderCost.toString());
+			
 		}
 		return orders;
 	}

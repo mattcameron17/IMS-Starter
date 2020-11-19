@@ -23,7 +23,8 @@ public class OrderDAO implements Dao<Order> {
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long order_id = resultSet.getLong("order_id");
 		Long customer_id_fk = resultSet.getLong("customer_id_fk");
-		return new Order(order_id, customer_id_fk);
+		Long orderCost = resultSet.getLong("orderCost");
+		return new Order(order_id, orderCost, customer_id_fk);
 	}
 	
 	public OrderItems modelFromResultSetOI(ResultSet resultSet) throws SQLException {
@@ -198,17 +199,18 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 	
-	public void updateCost(Long orderCost, Order order) {
+	public Order updateCost(Long cost, Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update orders set orderCost =" + orderCost +  " where order_id =" + order.getOrder_id());
+			order.setOrderCost(cost);
+			statement.executeUpdate("update orders set orderCost =" + order.getOrderCost() +  " where order_id =" + order.getOrder_id());
 			
-			
-		} catch (Exception e) {
+			return order;
+		} catch (Exception e) { 
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		
+		return null;
 	}
 
 

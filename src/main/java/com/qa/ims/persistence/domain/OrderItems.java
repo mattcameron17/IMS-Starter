@@ -14,7 +14,7 @@ public class OrderItems {
 	public OrderItems(Long order_items_id, Long order_id_fk, Long item_id_fk) {
 		this.order_items_id = order_items_id;
 		this.order_id_fk = order_id_fk;
-		this.item_id_fk = item_id_fk;
+		this.item_id_fk = item_id_fk; 
 	}
 
 	public Long getOrder_items_id() {
