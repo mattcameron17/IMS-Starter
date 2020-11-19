@@ -35,7 +35,7 @@ public class ItemControllerTest {
 	public void testCreate() {
 		final String I_NAME = "xbox";
 		final Double I_VALUE = 500.0;
-		final Item created = new Item(I_NAME, I_VALUE);
+		final Item created = new Item(I_NAME, I_VALUE); 
 		
 		Mockito.when(utils.getString()).thenReturn(I_NAME);
 		Mockito.when(utils.getDouble()).thenReturn(I_VALUE);

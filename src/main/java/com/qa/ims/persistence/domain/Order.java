@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Order {
 	
 	private Long order_id;
-	private Long orderCost = 0L;
+	private Double orderCost = 0D; 
 	private Long customer_id_fk;
 	
 	
@@ -20,7 +20,7 @@ public class Order {
 	}
 	
 
-	public Order(Long order_id, Long orderCost, Long customer_id_fk) {
+	public Order(Long order_id, Double orderCost, Long customer_id_fk) {
 		super();
 		this.order_id = order_id;
 		this.orderCost = orderCost;
@@ -35,11 +35,11 @@ public class Order {
 		this.order_id = order_id;
 	}
 
-	public Long getOrderCost() {
+	public Double getOrderCost() {
 		return orderCost;
 	}
 
-	public void setOrderCost(Long orderCost) {
+	public void setOrderCost(Double orderCost) {
 		this.orderCost = orderCost;
 	}
 
@@ -76,7 +76,7 @@ public class Order {
 			return false;
 		if (orderCost == null) {
 			if (other.orderCost != null)
-				return false;
+				return false; 
 		} else if (!orderCost.equals(other.orderCost))
 			return false;
 		if (order_id == null) {

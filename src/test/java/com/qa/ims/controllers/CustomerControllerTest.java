@@ -37,13 +37,13 @@ public class CustomerControllerTest {
 		Mockito.when(utils.getString()).thenReturn(F_NAME, L_NAME);
 		Mockito.when(dao.create(created)).thenReturn(created);
 
-		assertEquals(created, controller.create()); 
+		assertEquals(created, controller.create());  
 
 		Mockito.verify(utils, Mockito.times(2)).getString();
-		Mockito.verify(dao, Mockito.times(1)).create(created);
+		Mockito.verify(dao, Mockito.times(1)).create(created); 
 	}
 
-	@Test
+	@Test 
 	public void testReadAll() {
 		List<Customer> customers = new ArrayList<>();
 		customers.add(new Customer(1L, "jordan", "harrison")); 
@@ -53,7 +53,7 @@ public class CustomerControllerTest {
 		assertEquals(customers, controller.readAll());
 
 		Mockito.verify(dao, Mockito.times(1)).readAll();
-	}
+	} 
 
 	@Test
 	public void testUpdate() {

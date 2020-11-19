@@ -20,7 +20,7 @@ import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController<Order> {
 	
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger();  
 
 	private OrderDAO orderDAO;
 	private Utils utils;
@@ -42,11 +42,11 @@ public class OrderController implements CrudController<Order> {
 		//to add the updated price to the orders table
 		for (Order order : orders) {
 			List<OrderItems> order_itemsItems = orderDAO.readOrderedItems(order);
-			Long orderCost = 0L;
+			Double orderCost = 0D;
 			for (OrderItems order_items : order_itemsItems) {
 				
 				item_id = order_items.getItem_id_fk();
-				Long itemCost = orderDAO.readPrice(item_id);
+				Double itemCost = orderDAO.readPrice(item_id);
 				orderCost = orderCost + itemCost;
 				orderDAO.updateCost(orderCost, order);
 				
@@ -128,7 +128,8 @@ public class OrderController implements CrudController<Order> {
 	public int delete() {
 		LOGGER.info("Please enter the id of the order you would like to delete");
 		Long order_id = utils.getLong();
-		return orderDAO.delete(order_id); 
+		orderDAO.deleteAllOrderItems(order_id);
+		return orderDAO.delete(order_id);  
 	}
 
 }
