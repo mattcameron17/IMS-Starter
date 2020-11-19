@@ -17,7 +17,7 @@ public class CustomerTest {
 	public void testSetId() {
 		final Long expected = 5L;
 		cust.setId(5L);
-		assertEquals(expected, cust.getId());
+		assertEquals(expected, cust.getId()); 
 	}
 	
 	@Test
