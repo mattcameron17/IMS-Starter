@@ -20,22 +20,25 @@ Also an Integrated Development environment is recommended such as [Eclipse](http
 
 
 ### Installing
+Instructions are for Windows Operating System.
 
-A step by step series of examples that tell you how to get a development env running
+- Download JDK, then install Java.
+- Search for environment variables in windows search bar.
+- Click Environment variables button in System Properties.
+- Click New, underneath System variables window.
+- Enter JAVA_HOME as Variable name
+- For Variable value, click Browse and navigate to jdk file in Program Files.
 
-Say what the step will be
 
-```
-Give the example
-```
 
-And repeat
+- Download and install Maven.
+- Search for environment variables in windows search bar.
+- Click Environment variables button in System Properties.
+- Click New, underneath System variables window.
+- Enter M2_HOME as Variable name
+- For Variable value click Browse and navigate to apache-maven-3.6.3 in Program Files.
+- Repeat the steps but make a new Variable name called MAVEN_HOME.
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
@@ -43,17 +46,37 @@ In order to run all of the tests currently present in the project go to the proj
 
 ### Unit Tests 
 
-Unit testing is where individual units of source code are tested to see if they return what is expected of them.
+Unit testing is where individual units of source code are tested to see if they return what is expected of them. This particular test, tests the create() method in the ItemDAO class, which creates a new item that is recorded in the database. This test is ran to assert that the create() method does in fact create a new item in the database. To run, right click file in IDE and select Run As ---> JUnit test.
 
 ```
-Give an example
+@Test
+	public void testCreate() {
+		final Item created = new Item(2L, "ps5", 359.99D);
+		assertEquals(created, DAO.create(created));
+	}
+
 ```
 
 ### Integration Tests 
-Explain what these tests test, why and how to run them
+Integration testing is where classes that depend on other classes are tested as a group.  The following test tests the update() method within the ItemController class.  This method depends on the util and DAO class and thus integration testing is required.  This test is ran to assert that the update() method collects the correct data using the util class methods to send to the update() method in the DAO class. To run, right click file in IDE and select Run As --> JUnit test.
 
 ```
-Give an example
+@Test
+	public void testUpdate() {
+		Item updated = new Item(1L, "dreamcast", 50D);
+
+		Mockito.when(this.utils.getLong()).thenReturn(1L);
+		Mockito.when(this.utils.getString()).thenReturn(updated.getItemName());
+		Mockito.when(this.utils.getDouble()).thenReturn(updated.getItemValue());
+		Mockito.when(this.dao.update(updated)).thenReturn(updated);
+
+		assertEquals(updated, this.controller.update());
+
+		Mockito.verify(this.utils, Mockito.times(1)).getLong();
+		Mockito.verify(this.utils, Mockito.times(1)).getString();
+		Mockito.verify(this.utils, Mockito.times(1)).getDouble();
+		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
+	}
 ```
 
 ## Deployment
