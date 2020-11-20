@@ -1,19 +1,23 @@
-Coverage: 34%
-# Project Title
+Test Coverage: 70%
+# Inventory Management System
 
-One Paragraph of project description goes here
+This project is an Inventory Management System (IMS) that is used to create and delete, customers, items, and orders. The system is controlled by text using the command line interface (CLI). 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+To get started on your own machine fork the project to your own repository, then use the command git clone, followed by the url of the forked repo.  This will get the project onto your machine for development and testing purposes.
 
 ### Prerequisites
+The software required to run this project is as follows:
 
-What things you need to install the software and how to install them
+[Maven](https://maven.apache.org/) which is allows us to create an executable jar file.
 
-```
-Give examples
-```
+[MySQLWorkbench](https://www.mysql.com/products/workbench/) which is used to set up the server and database.
+
+[Java Development Kit](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) which allows us to code Java.
+
+Also an Integrated Development environment is recommended such as [Eclipse](https://www.eclipse.org/downloads/)
+
 
 ### Installing
 
@@ -35,11 +39,11 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Running the tests
 
-Explain how to run the automated tests for this system. Break down into which tests and what they do
+In order to run all of the tests currently present in the project go to the project tree and find the src/test/java folder in the IDE, then right click on it and select Coverage as --> JUnit Test.
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
+Unit testing is where individual units of source code are tested to see if they return what is expected of them.
 
 ```
 Give an example
@@ -52,38 +56,33 @@ Explain what these tests test, why and how to run them
 Give an example
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+To deploy project either:
+- Open project in an IDE and run project
+- Open the command line interface and navigate to the folder containing the jar file. Then input 'java -jar file.jar' Make sure to enter the filename in place of file.jar.
 
 ## Built With
+* [Eclipse](https://www.eclipse.org/) - Java IDE
 
 * [Maven](https://maven.apache.org/) - Dependency Management
 
+* [MySQLWorkbench](https://www.mysql.com/products/workbench/) - SQL Database Management
+
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning.
+Version 2.0
 
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Matthew Cameron** - *Continued work* - [matthewcameron](https://github.com/mattcameron17)
 
 ## License
 
 This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md) file for details 
 
-*For help in [Choosing a license](https://choosealicense.com/)*
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Piers Barber & Aswene Sivaraj for their patience.
