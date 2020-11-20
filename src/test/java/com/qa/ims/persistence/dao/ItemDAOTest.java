@@ -19,7 +19,7 @@ public class ItemDAOTest {
 
 	@BeforeClass
 	public static void init() {
-		DBUtils.connect("root", "Ic3Berg$lim");
+		DBUtils.connect("root", "pass");
 	} 
 	
 	@Before
